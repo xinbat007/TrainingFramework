@@ -1,0 +1,121 @@
+#Shaders: 7
+ID 0
+VS "../Resources/Effects/PostEffectVS.vs"
+FS "../Resources/Effects/PostEffectFS.fs"
+ID 1
+VS "../Resources/Effects/PostEffectVS.vs"
+FS "../Resources/Effects/BlackWhiteFS.fs"
+ID 2
+VS "../Resources/Effects/PostEffectVS.vs"
+FS "../Resources/Effects/BlurFS.fs"
+ID 3
+VS "../Resources/Effects/PostEffectVS.vs"
+FS "../Resources/Effects/PreBloomFS.fs"
+ID 4
+VS "../Resources/Effects/PostEffectVS.vs"
+FS "../Resources/Effects/PostBloomFS.fs"
+ID 5
+VS "../Resources/Effects/PostEffectVS.vs"
+FS "../Resources/Effects/DOF_BlurFS.fs"
+ID 6
+VS "../Resources/Effects/PostEffectVS.vs"
+FS "../Resources/Effects/DepthOfFieldFS.fs"
+
+#FBO: 3
+
+#Effects: 5
+//-------------
+ID 0
+Name: NoEffects
+NumPasses: 1
+PassID 0
+   ShaderID: 0
+   Textures: 1c, 00, 00 
+   Target: 0 
+   OtherData: 0.0
+//--------------
+ID 1
+Name: BW
+NoPasses: 1
+PassID 0
+   ShaderID: 1
+   Textures: 1c, 00, 00
+   Target: 0 
+   OtherData: 0.0
+//--------------
+ID 2
+Name: Blur
+NoPasses: 5
+PassID 0
+   ShaderID: 2
+   Textures: 1c, 00, 00
+   Target: 2
+   OtherData: 5.0
+PassID 0
+   ShaderID: 2
+   Textures: 2c, 00, 00
+   Target: 1
+   OtherData: 17.0
+PassID 0
+   ShaderID: 2
+   Textures: 1c, 00, 00
+   Target: 2
+   OtherData: 31.0
+PassID 0
+   ShaderID: 2
+   Textures: 2c, 00, 00
+   Target: 1
+   OtherData: 43.0
+PassID 0
+   ShaderID: 2
+   Textures: 1c, 00, 00
+   Target: 0
+   OtherData: 63.0
+//--------------
+ID 3
+Name: Bloom
+NoPasses: 4
+PassID 0
+   ShaderID: 3
+   Textures: 1c, 00, 00
+   Target: 2
+   OtherData: 0.5
+PassID 0
+   ShaderID: 2
+   Textures: 2c, 00, 00
+   Target: 3
+   OtherData: 5.0
+PassID 0
+   ShaderID: 2
+   Textures: 3c, 00, 00
+   Target: 2
+   OtherData: 17.0
+PassID 0
+   ShaderID: 4
+   Textures: 1c, 2c, 00
+   Target: 0 
+   OtherData: 0.0
+//--------------
+ID 4
+Name: DOF
+NoPasses: 4
+PassID 0 Blur(DOF)
+   ShaderID: 5
+   Textures: 1c, 1d, 00
+   Target: 2
+   OtherData: 3.0
+PassID 0 Blur(DOF)
+   ShaderID: 5
+   Textures: 2c, 1d, 00
+   Target: 3
+   OtherData: 5.0
+PassID 0 Blur(DOF)
+   ShaderID: 5
+   Textures: 3c, 1d, 00
+   Target: 2
+   OtherData: 9.0
+PassID 0 DOF
+   ShaderID: 6
+   Textures: 1c, 2c, 1d
+   Target: 0
+   OtherData: 16.0
